@@ -4,6 +4,8 @@ services:
     mysql:
         image: mysql:5.7
         hostname: mysql
+        volumes:
+            - "./:/app"
         environment:
             MYSQL_DATABASE: highload
             MYSQL_USER: root
@@ -31,3 +33,14 @@ services:
             - "./:/app"
         depends_on:
             - php-fpm
+    grafana:
+        image: grafana/grafana:7.3.6
+        ports:
+          - 3002:3000
+    prometheus:
+        image: prom/prometheus
+        ports:
+          - 9090:9090
+        volumes:
+          - ./docker/prometheus:/etc/prometheus
+        command: --web.enable-lifecycle  --config.file=/etc/prometheus/prometheus.yml
