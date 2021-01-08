@@ -10,10 +10,18 @@ use Symfony\Component\Routing\Annotation\Route;
 class AuthController extends BaseController
 {
     /**
-     * @Route("/auth/hello", name="auth/hello")
+     * @Route("/register", name="auth/register")
      */
-    public function hello(): Response
+    public function register(): Response
     {
-        return new Response('Hello, world from AuthController');
+        return $this->render('auth/register.html.twig');
+    }
+
+    /**
+     * @Route("/login", name="auth/login")
+     */
+    public function login(): Response
+    {
+        return $this->render('auth/login.html.twig');
     }
 }

@@ -10,12 +10,10 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomeController extends BaseController
 {
     /**
-     * @Route("/")
+     * @Route("/", name="/")
      */
     public function home(): Response
     {
-        return $this->render('home/home.html.twig', [
-            'title' => 'Home'
-        ]);
+        return $this->render('home/home.html.twig');
     }
 }
