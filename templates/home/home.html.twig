@@ -1,0 +1,8 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <body>
+    <h1>Hello! This is {{ title }} controller.</h1>
+    <p>Go to <a href="{{ path('auth/hello') }}">login</a></p>
+    {% dump title %}
+{% endblock %}
