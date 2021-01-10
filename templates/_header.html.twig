@@ -14,8 +14,13 @@
                 </li>
             </ul>
 
-            <a class="btn text-light" href="{{ path('auth/register') }}">Регистрация</a>
-            <a class="btn btn-light" href="{{ path('auth/login') }}">Вход</a>
+            {% if app.user %}
+                <a class="btn text-light" href="{{ path('auth/register') }}">{{ app.user.name }}</a>
+                <a class="btn btn-light" href="{{ path('auth/logout') }}">Выйти</a>
+            {% else %}
+                <a class="btn text-light" href="{{ path('auth/register') }}">Регистрация</a>
+                <a class="btn btn-light" href="{{ path('auth/login') }}">Вход</a>
+            {% endif %}
         </div>
     </div>
 </nav>

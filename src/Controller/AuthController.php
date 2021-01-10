@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class AuthController extends BaseController
 {
@@ -44,9 +45,7 @@ class AuthController extends BaseController
                 $regCmd = new RegisterUser($registerForm, new NoOrmUserRepository($conn));
                 $regCmd->execute();
             } catch (\Exception $exception) {
-                dump($exception);
                 $this->addFlash('danger', $exception->getMessage());
-
                 //return $this->redirectToRoute('auth/register');
             }
 
@@ -61,8 +60,25 @@ class AuthController extends BaseController
     /**
      * @Route("/login", name="auth/login")
      */
-    public function login(): Response
+    public function login(AuthenticationUtils $authenticationUtils): Response
     {
-        return $this->render('auth/login.html.twig');
+        if ($this->getUser()) {
+             return $this->redirectToRoute('/');
+        }
+
+        $error = $authenticationUtils->getLastAuthenticationError();
+        $lastUsername = $authenticationUtils->getLastUsername();
+
+        return $this->render('auth/login.html.twig', [
+            'last_username' => $lastUsername,
+            'error' => $error
+        ]);
+    }
+
+    /**
+     * @Route("/logout", name="auth/logout")
+     */
+    public function logout(): void
+    {
     }
 }
