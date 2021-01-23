@@ -46,10 +46,10 @@ class AuthController extends BaseController
                 $regCmd->execute();
             } catch (\Exception $exception) {
                 $this->addFlash('danger', $exception->getMessage());
-                //return $this->redirectToRoute('auth/register');
+                return $this->redirectToRoute('auth/register');
             }
 
-            //return $this->redirectToRoute('task_success');
+            return $this->redirectToRoute('auth/login');
         }
 
         return $this->render('auth/register.html.twig', [

@@ -2,4 +2,20 @@
 
 {% block content %}
     <h1>Главная</h1>
+
+    {% if (users) %}
+        <table class="table">
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.name }} {{ user.lastname }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.age }}</td>
+                    <td>
+                        <a href="#">Follow</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
 {% endblock %}

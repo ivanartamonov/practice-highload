@@ -99,4 +99,28 @@ class NoOrmUserRepository implements UserRepositoryInterface, PasswordUpgraderIn
             ]
         );
     }
+
+    public function getUserList(int $offset, int $limit): array
+    {
+        if ($offset < 0) {
+            $offset = 0;
+        }
+
+        if ($limit < 0) {
+            $limit = 0;
+        }
+
+        $query = '
+            SELECT * FROM users 
+            ORDER BY id DESC
+            LIMIT :offset, :limit
+        ';
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindValue('offset', $offset, \PDO::PARAM_INT);
+        $stmt->bindValue('limit', $limit, \PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetchAllAssociative();
+    }
 }
